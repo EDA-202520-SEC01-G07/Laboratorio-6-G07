@@ -46,7 +46,7 @@ def contains (my_map, key):
    return encontrado
    
 
-def new_map(num_elements, load_factor, prime=109345121)
+def new_map(num_elements, load_factor, prime=109345121):
     y=mf.next_prime(num_elements/load_factor)
     x = lt.new_list()
     for i in range(y):

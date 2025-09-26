@@ -48,4 +48,9 @@ def contains (my_map, key):
          return encontrado
    return encontrado
 
- 
+ def get(my_map, key):
+   for i in range(1, my_map["capacity"] + 1):
+      current = lt.get_element(my_map["table"], i)
+      if me.get_key(current) == key:
+         return me.get_value(current)
+   return None  

@@ -1,6 +1,21 @@
 from DataStructures.List import array_list as lt
 from DataStructures.Map import map_entry as me
 
+def is_available(table, pos):
+
+   entry = lt.get_element(table, pos)
+   if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
+      return True
+   return False
+
+def default_compare(key, entry):
+
+   if key == me.get_key(entry):
+      return 0
+   elif key > me.get_key(entry):
+      return 1
+   return -1
+
 def find_slot(my_map, key, hash_value):
    first_avail = None
    found = False
@@ -18,3 +33,8 @@ def find_slot(my_map, key, hash_value):
             ocupied = True
       hash_value = (hash_value + 1) % my_map["capacity"]
    return ocupied, first_avail
+
+def new_map()
+    map = {"prime": 109345121,
+           "capacity"        
+    }

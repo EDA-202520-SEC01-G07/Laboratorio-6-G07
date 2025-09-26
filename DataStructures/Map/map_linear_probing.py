@@ -42,9 +42,10 @@ def new_map()
 def contains (my_map, key):
    encontrado = False
    for i in range(1, my_map["capacity"] + 1):
-      entry = lt.get_element(my_map["table"], i)
-      if me.get_key(entry) == key:
+      current = lt.get_element(my_map["table"], i)
+      if me.get_key(current) == key:
          encontrado = True
          return encontrado
    return encontrado
-   
+
+ 

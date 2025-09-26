@@ -1,5 +1,7 @@
 from DataStructures.List import array_list as lt
 from DataStructures.Map import map_entry as me
+from DataStructures.Map import map_functions as mf
+import random 
 
 def is_available(table, pos):
 
@@ -47,6 +49,24 @@ def contains (my_map, key):
          encontrado = True
          return encontrado
    return encontrado
+   
+
+def new_map(num_elements, load_factor, prime=109345121)
+    y=mf.next_prime(num_elements/load_factor)
+    x = lt.new_list()
+    for i in range(y):
+        lt.add_last(x, me.new_map_entry(None,None))
+    map = {"prime": prime,
+           "capacity": y,
+           "scale": random.randrange(1, prime-1),
+           "shift":random.randrange(0, prime-1),
+           "table": x,
+           "current_factor": 0,
+           "limit_factor": load_factor,
+           "size": 0
+    }
+    
+
 
  def get(my_map, key):
    for i in range(1, my_map["capacity"] + 1):

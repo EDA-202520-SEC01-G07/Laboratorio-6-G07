@@ -63,7 +63,7 @@ def new_map(num_elements, load_factor, prime=109345121)
     
 
 
- def get(my_map, key):
+def get(my_map, key):
    for i in range(1, my_map["capacity"] + 1):
       current = lt.get_element(my_map["table"], i)
       if me.get_key(current) == key:

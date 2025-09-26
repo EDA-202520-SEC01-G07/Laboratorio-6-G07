@@ -35,11 +35,6 @@ def find_slot(my_map, key, hash_value):
             ocupied = True
       hash_value = (hash_value + 1) % my_map["capacity"]
    return ocupied, first_avail
-
-def new_map()
-    map = {"prime": 109345121,
-           "capacity"        
-    }
     
 def contains (my_map, key):
    encontrado = False

@@ -103,11 +103,12 @@ def default_sort_criteria(element_1, element_2):
     if element_1 < element_2:
         is_sorted = True
     return is_sorted
+sort_crit = default_sort_criteria
 
 def insertion_sort(my_list, sort_crit):
     sort_list = new_list()
     if my_list["size"]>1:
-        default_sort_criteria(my_list["elements"][0], my_list["elements"][1])
+        sort_crit(my_list["elements"][0], my_list["elements"][1])
         for i in range(0,my_list["size"]):
             if sort_list["size"]==0:
                 add_last(sort_list, my_list["elements"][i])
@@ -120,14 +121,14 @@ def insertion_sort(my_list, sort_crit):
         sort_list = my_list
     return sort_list
 
-def selection_sort(array_list, default_sort_criteria):
+def selection_sort(array_list, sort_criteria):
     n = size(array_list)
     for i in range(n):
         min_index = i
         min_elem = get_element(array_list, i)
         for j in range(i + 1, n):
             elem = get_element(array_list, j)
-            if default_sort_criteria(elem, min_elem):
+            if sort_criteria(elem, min_elem):
                 min_elem = elem
                 min_index = j
         if min_index != i:
@@ -135,17 +136,23 @@ def selection_sort(array_list, default_sort_criteria):
     return array_list
 
 
-def shell_sort(my_list, default_sort_criteria):
-    h=size(my_list)//3
-    while h > 0:
-        for i in range(h):
-            temp = get_element(my_list, i)
-            j = h
-            while j != i and default_sort_criteria(get_element(my_list, j),temp):
-                exchange(my_list, j, i)
-                j -= h
-        h = 3*h+1
+def shell_sort(my_list, sort_criteria):
+    tam = size(my_list)
+    h=(3 * tam + 1)//3
+    if tam == 0 or tam == 1:
+        return my_list
+    else: 
+        while h > 0:
+            for i in range(tam):
+                temp = get_element(my_list, i)
+                gap = i+h
+                while gap < tam:
+                    if sort_criteria(get_element(my_list, gap),temp):
+                        exchange(my_list, gap, i)
+                    gap += h
+            h = h//3
     return my_list
+
 def merge_sort(my_list, sort_crit):
     if my_list["size"] > 1:
         mitad = my_list["size"] // 2
@@ -173,6 +180,7 @@ def merge(list_1, list_2, sort_crit):
             add_last(merged_list, ed)
             r += 1
     return merged_list
+
 def quick_sort(array_list, sort_crit):
     if array_list["size"] > 1:
         pivot = get_element(array_list, 0)

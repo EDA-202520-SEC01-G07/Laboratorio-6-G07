@@ -177,53 +177,29 @@ def change_info(my_list, pos, new_info):
         nodo["info"]=new_info
     return my_list
 
-def exchange(my_list,p1, p2):
-    if p1 < 0 or p1 > size(my_list) or p2 < 0 or p2 > size(my_list):
-        raise Exception('IndexError: list index out of range')
-    elif p1!=p2:
-        nodo = my_list["first"]
-        cont = 1
-        ant= None
-        sig = None
-        
-        n1 = my_list["first"]
-        ant1 = None
-        sig1 = my_list["first"]["next"]
-        
-        n2 = my_list["first"]
-        ant2 = None
-        sig2 = my_list["first"]["next"]
-       
-        while cont < my_list["size"]:
-            ant=nodo
-            nodo = nodo["next"]
-            sig = nodo["next"]
-            if cont == p1:
-                n1=nodo
-                ant1 = ant
-                sig1 = sig
-            elif cont == p2:
-                n2=nodo
-                ant2=ant
-                sig2=sig    
-            cont +=1
-        ant1["next"]=n2
-        n2["next"]=sig1
-        ant2["next"]=n1
-        n1["next"]=sig2
-        
-        if ant1 == None:
-            my_list["first"]=n2
-        if sig2 == None:
-            my_list["last"]=n1
-    return my_list
+def exchange(my_list, p1, p2):
+    if p1 == p2:
+        return my_list
 
+    nodo1 = my_list["first"]
+    for _ in range(p1):
+        nodo1 = nodo1["next"]
+
+    nodo2 = my_list["first"]
+    for _ in range(p2):
+        nodo2 = nodo2["next"]
+
+    nodo1["info"], nodo2["info"] = nodo2["info"], nodo1["info"]
+
+    return my_list
+ 
 def sub_list(my_list, pos, num_elmts):
-    if pos < 0 or pos > size(my_list):
+    tam= my_list["size"]
+    if pos < 0 or pos > tam:
         raise Exception('IndexError: list index out of range')
     else:
-        if pos + num_elmts > my_list["size"]:
-            num_elmts = my_list["size"]-pos
+        if pos + num_elmts > tam:
+            num_elmts = tam -pos
         s_list = new_list()
         nodo = my_list["first"]
         cont = 0
@@ -237,6 +213,7 @@ def sub_list(my_list, pos, num_elmts):
             nodo=nodo["next"]
     return s_list
 
+#Funciones Lab 5
 def default_sort_criteria(element_1, element_2):
     is_sorted = False
     if element_1 < element_2:
@@ -244,37 +221,54 @@ def default_sort_criteria(element_1, element_2):
     return is_sorted
 sort_criteria = default_sort_criteria
 
+
 def insertion_sort(my_list, default_sort_criteria):
     sort_list = new_list()
     nodo = my_list["first"]
-    
+    tam = sort_list["size"]
     while nodo != None:
-        if sort_list["size"]==0:
+        if tam==0:
             sort_list = add_last(sort_list, nodo["info"])
         else:
             actual = sort_list["first"]
-            position = 0
-            while position < sort_list["size"] and default_sort_criteria(actual["info"], nodo["info"]):
+            pos = 0
+            t = sort_list["size"]
+            while actual != None and pos < t and default_sort_criteria(actual["info"], nodo["info"]):
                 actual = actual["next"]
-                position +=1
-            sort_list = insert_element(sort_list, nodo["info"], position)
+                pos +=1
+            sort_list = insert_element(sort_list, nodo["info"], pos)
         nodo=nodo["next"]
     return sort_list
 
+def selection_sort(list, sort_criteria):
+    n = size(list)
+    for i in range(n):
+        min_index = i
+        min_elem = get_element(list, i)
+        for j in range(i + 1, n):
+            elem = get_element(list, j)
+            if sort_criteria(elem, min_elem):
+                min_elem = elem
+                min_index = j
+        if min_index != i:
+            exchange(list, i, min_index)
+    return list
 
-def shell_sort(my_list, sort_crit):
-    h = (3 * my_list["size"] + 1) // 3  
-    while h > 0:
-        i = h
-        while i < my_list["size"]:
-            temp = get_element(my_list, i+1)
-            j = i
-            while j >= h and sort_crit(temp, get_element(my_list, j-h+1)):
-                change_info(my_list, j+1, get_element(my_list, j-h+1))
-                j -= h
-            change_info(my_list, j+1, temp)
-            i += 1
-        h=h//3
+def shell_sort(my_list, sort_criteria):
+    tam = size(my_list)
+    h=(3 * tam + 1)//3
+    if tam == 0 or tam == 1:
+        return my_list
+    else: 
+        while h > 0:
+            for i in range(tam):
+                temp = get_element(my_list, i)
+                gap = i+h
+                while gap < tam:
+                    if sort_criteria(get_element(my_list, gap),temp):
+                        exchange(my_list, gap, i)
+                    gap += h
+            h = h//3
     return my_list
 
 def merge_sort(my_list, sort_crit):
@@ -311,4 +305,30 @@ def merge(lst1, lst2, sort_crit):
             add_last(new, elem_r)
             r += 1
     return new
+
+def quick_sort(list, sort_crit):
+    tam = list["size"]
+    if tam == 0 or tam > 1:
+        return list
+    else:
+        pivot = get_element(list, 0)
+        menores = new_list()
+        mayores = new_list()
+        for i in range(1, list["size"]):
+            elem = get_element(list, i)
+            if sort_crit(elem, pivot):
+                add_last(menores, elem)
+            else:
+                add_last(mayores, elem)
+        sorted_less = quick_sort(menores, sort_crit)
+        sorted_greater = quick_sort(mayores, sort_crit)
+            
+    sorted_array = new_list()
+    for i in range(sorted_less["size"]):
+        add_last(sorted_array, get_element(sorted_less, i))
+    
+    add_last(sorted_array, pivot)
+    for i in range(sorted_greater["size"]):
+        add_last(sorted_array, get_element(sorted_greater, i))
+    return sorted_array
             

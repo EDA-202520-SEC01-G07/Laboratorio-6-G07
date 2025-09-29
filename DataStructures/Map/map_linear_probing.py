@@ -113,4 +113,26 @@ def get(my_map, key):
       current = lt.get_element(my_map["table"], i)
       if me.get_key(current) == key:
          return me.get_value(current)
-   return None  
+   return None
+
+def remove(mapa, key):
+   hash = mf.hash_value(mapa, key)
+   ocupied, pos = find_slot(mapa, key, hash)
+   entry = lt.get_element(mapa["table"], pos)
+   me.set_value(entry, "__EMPTY__")
+   me.set_key(entry, "__EMPTY__")
+   mapa["size"] -= 1
+   mapa["current_factor"] = mapa["size"]/mapa["capacity"]
+   return mapa
+
+def size(mapa):
+   return mapa["size"]
+
+def is_empty(mapa):
+   return None
+
+def key_set(mapa):
+   return None
+
+def value_set(mapa):
+   return None

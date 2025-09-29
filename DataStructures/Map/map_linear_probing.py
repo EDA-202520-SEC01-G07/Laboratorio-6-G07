@@ -128,11 +128,10 @@ def remove(mapa, key):
 def size(mapa):
    return mapa["size"]
 
-def is_empty(mapa):
-   return None
+#def is_empty(mapa):
 
-def key_set(mapa):
-   return None
 
-def value_set(mapa):
-   return None
+#def key_set(mapa):
+
+
+#def value_set(mapa):

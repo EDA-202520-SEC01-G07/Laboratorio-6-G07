@@ -81,8 +81,8 @@ def new_map(num_elements, load_factor, prime=109345121):
     }
     return map
     
-def put (mapa, key, valor):
-   llave = mf.hash_value(mapa["table"], key) #Hash de la llave
+def put(mapa, key, valor):
+   llave = mf.hash_value(mapa, key) #Hash de la llave
    ocupied, pos = find_slot(mapa, key, llave)
    entry = lt.get_element(mapa["table"], pos)
    if ocupied: #Si existe la llave, se cambia el valor
@@ -99,9 +99,9 @@ def put (mapa, key, valor):
 #Se retorna la tabla con el nuevo elemento agregado.
    return mapa
 
-def contains (my_map, key):
+def contains(my_map, key):
    encontrado = False
-   for i in range(1, my_map["capacity"] + 1):
+   for i in range(my_map["capacity"]):
       current = lt.get_element(my_map["table"], i)
       if me.get_key(current) == key:
          encontrado = True
@@ -109,7 +109,7 @@ def contains (my_map, key):
    return encontrado
 
 def get(my_map, key):
-   for i in range(1, my_map["capacity"] + 1):
+   for i in range(my_map["capacity"]):
       current = lt.get_element(my_map["table"], i)
       if me.get_key(current) == key:
          return me.get_value(current)

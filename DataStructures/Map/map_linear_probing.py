@@ -139,8 +139,7 @@ def key_set(mapa):
    llaves = lt.new_list()
    for i in range(tam):
       entry = lt.get_element(mapa["table"], i)
-      if entry is not None and entry != "__EMPTY__":
-         if me.get_key(entry) is not None and me.get_key(entry) != "__EMPTY__":
+      if me.get_key(entry) is not None and me.get_key(entry) != "__EMPTY__":
             lt.add_last(llaves, me.get_key(entry)) 
    return llaves
 
@@ -150,7 +149,6 @@ def value_set(mapa):
    valores = lt.new_list()
    for i in range(tam):
       entry = lt.get_element(mapa["table"], i)
-      if entry is not None and entry != "__EMPTY__":
-         if me.get_value(entry) is not None and me.get_value(entry) != "__EMPTY__":
+      if me.get_value(entry) is not None and me.get_value(entry) != "__EMPTY__":
             lt.add_last(valores, me.get_value(entry))
    return valores

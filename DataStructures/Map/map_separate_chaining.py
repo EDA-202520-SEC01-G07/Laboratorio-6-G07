@@ -96,7 +96,16 @@ def get(mapa, key):
             x = me.get_value(elem)
     return x
 
-#def remove(mapa, key): Tener en cuenta el current factor y size
+def remove(mapa, key):
+    hash= mf.hash_value(mapa,key)
+    entry = alt.get_element(mapa["table"], hash)
+    for i in range(slt.size(entry)):
+        elem = slt.get_element(entry, i)
+        if key == me.get_key(elem):
+            slt.delete_element (entry, i)
+            mapa["size"] -= 1
+            mapa["current_factor"] = mapa["size"]/mapa["capacity"]
+    return mapa
 
 def size(mapa):
     return mapa["size"]

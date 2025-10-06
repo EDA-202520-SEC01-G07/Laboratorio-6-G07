@@ -44,8 +44,10 @@ def rehash(my_map):
    Asignar la nueva tabla a la tabla actual.
    Retornar la tabla nueva.
    """
-   cap_anterior = my_map["capacity"]
-   cap_nueva = mf.next_prime(2*cap_anterior)
+   cap_nueva = 2*my_map["capacity"]
+   if mf.is_prime(cap_nueva):
+      cap_nueva += 1
+   cap_nueva = mf.next_prime(cap_nueva)
    
    nuevo = new_map(cap_nueva, my_map["limit_factor"], my_map["prime"])
    nuevo["capacity"] = cap_nueva

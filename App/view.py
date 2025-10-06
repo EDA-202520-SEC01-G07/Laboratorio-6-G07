@@ -28,8 +28,8 @@ import sys
 import App.logic as logic
 import time
 import tracemalloc
-from DataStructures.Maps import map as mp
-from DataStructures.Lists import arraylist as al
+from DataStructures.Map import map as mp
+from DataStructures.List import array_list as al
 
 
 

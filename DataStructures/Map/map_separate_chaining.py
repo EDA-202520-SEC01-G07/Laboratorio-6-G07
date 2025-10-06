@@ -21,32 +21,36 @@ def rehash(my_map):  ##!!REVISAR EL REHASH POR LA NATURALEZA DEL SEPARATE CHAINI
     Asignar la nueva tabla como la tabla actual.
     Retornar la tabla nueva.
     """
-    cap_nueva = 2*my_map["capacity"]
-    if mf.is_prime(cap_nueva):
-        cap_nueva += 1
-    cap_nueva = mf.next_prime(cap_nueva)
-    
-    nuevo = new_map(cap_nueva, my_map["limit_factor"], my_map["prime"])
-    nuevo["capacity"] = cap_nueva
-    for i in range(my_map["capacity"]):
+    cap_nueva = mf.next_prime(2*my_map["capacity"])
+    new_table = alt.new_list()
+    for i in range(0, cap_nueva):
+        elem = slt.new_list()
+        alt.add_last(new_table, elem)
+        
+    contador = 0
+    cap_ant = my_map["capacity"]
+    my_map["capacity"] = cap_nueva
+    for i in range(cap_ant):
         entry = alt.get_element(my_map["table"], i)
         for j in range(slt.size(entry)):
             elem = slt.get_element(entry, j)
-            h = mf.hash_value(nuevo, elem["key"])
+            h = mf.hash_value(my_map, elem["key"])
             
-            entry_nuevo = alt.get_element(nuevo["table"], h)
+            entry_nuevo = alt.get_element(new_table, h)
             slt.add_last(entry_nuevo,me.new_map_entry(elem["key"], elem["value"]))
-            nuevo["size"] += 1
-            nuevo["current_factor"] = nuevo["size"]/nuevo["capacity"]
-    return nuevo
+            contador += 1
+    my_map["size"] = contador 
+    my_map["current_factor"] = my_map["size"]/my_map["capacity"]
+    my_map["table"] = new_table
+    return my_map
 
 def new_map(num_elements, load_factor, prime=109345121):
     y=mf.next_prime(num_elements//load_factor)
     x = alt.new_list()
     map = {"prime": prime,
            "capacity": y,
-           "scale": random.randrange(1, prime-1),
-           "shift":random.randrange(0, prime-1),
+           "scale":1,
+           "shift":0,
            "table": x,
            "current_factor": 0,
            "limit_factor": load_factor,

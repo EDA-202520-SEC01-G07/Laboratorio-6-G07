@@ -26,8 +26,11 @@
 
 import sys
 import App.logic as logic
-# TODO Realice la importación del mapa linear probing
-# TODO Realice la importación de ArrayList como estructura de datos auxiliar para sus requerimientos
+import time
+import tracemalloc
+from DataStructures.Maps import map as mp
+from DataStructures.Lists import arraylist as al
+
 
 
 """
@@ -47,13 +50,26 @@ def new_logic():
     control = logic.new_logic()
     return control
 
+def tiempo_start():
+    tracemalloc.start()
+    start_time = time.perf_counter()
+    return start_time
+def tiempo_end(start_time):
+    end_time = time.perf_counter()
+    current, peak = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+    elapsed_time_ms = (end_time - start_time) * 1000  
+    return elapsed_time_ms, current / 1024, peak / 1024 
+
 # TODO Incluir las mediciones de tiempo y uso de memoria en la ejecución de la consulta.
 def load_data(control):
     """
     Solicita a la controlador que cargue los datos
     """
-    books, authors, tags, book_tags = logic.load_data(control)
-    return books, authors, tags, book_tags
+    t0=tiempo_start()
+    books, authors, tags, book_tags= logic.load_data(control)
+    elapsed_time_ms, current, peak = tiempo_end(t0)
+    return books, authors, tags, book_tags, elapsed_time_ms, current, peak
 
 #  -------------------------------------------------------------
 # Funciones para la correcta impresión de los datos
@@ -157,9 +173,11 @@ def main():
             print('Géneros cargados: ' + str(tg))
             print('Asociación de Géneros a Libros cargados: ' +
                   str(bktg))
+            elapsed_time_ms, current, peak = tiempo_end(t0)
 
         elif int(inputs[0]) == 2:
             number = input("Ingrese el id del libro (good_read_book_id) que desea buscar: ")
+            t0= tiempo_start()
             book = logic.get_book_info_by_book_id(control, number)
             print_book_info(book)
 

@@ -12,7 +12,7 @@ def default_compare(key, element):
       return 1
    return -1
 
-def rehash(my_map):  ##!!REVISAR EL REHASH POR LA NATURALEZA DEL SEPARATE CHAINING!!##
+def rehash(my_map):
     """
     Realiza un rehash de la tabla de simbolos.
     Para realizar un rehash se debe seguir los siguientes pasos:

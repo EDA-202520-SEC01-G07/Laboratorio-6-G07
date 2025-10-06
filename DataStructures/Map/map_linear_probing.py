@@ -44,28 +44,30 @@ def rehash(my_map):
    Asignar la nueva tabla a la tabla actual.
    Retornar la tabla nueva.
    """
-   cap_nueva = 2*my_map["capacity"]
-   if mf.is_prime(cap_nueva):
-      cap_nueva += 1
-   cap_nueva = mf.next_prime(cap_nueva)
+   cap_nueva = mf.next_prime(2*my_map["capacity"])
+   cap_ant = my_map["capacity"]
+   my_map["capacity"] = cap_nueva
    
-   nuevo = new_map(cap_nueva, my_map["limit_factor"], my_map["prime"])
-   nuevo["capacity"] = cap_nueva
-   for i in range(my_map["capacity"]):
+   new_table = lt.new_list()
+   for i in range(cap_nueva):
+        lt.add_last(new_table, me.new_map_entry(None,None))
+   
+   for i in range(cap_ant):
       entry = lt.get_element(my_map["table"], i)
       if me.get_key(entry) is not None:
          llave = me.get_key(entry)
          valor = me.get_value(entry)
-         h = mf.hash_value(nuevo, llave)
-         ocupied, pos = find_slot(nuevo, llave, h)
+         h = mf.hash_value(my_map, llave) #Encuentra el nuevo valor hash
+         
+         ocupied, pos = find_slot(my_map, llave, h)
          if ocupied: #Si existe la llave, se cambia el valor
-            me.set_value(lt.get_element(nuevo["table"], pos), valor)
-         else: #No existe y se debe agregar la llave-valor y añadir 1 en current factor
-            me.set_key(lt.get_element(nuevo["table"], pos), llave)
-            me.set_value(lt.get_element(nuevo["table"], pos), valor)
-            nuevo["size"] += 1
-            nuevo["current_factor"] = nuevo["size"]/nuevo["capacity"]
-   return nuevo
+            me.set_value(lt.get_element(new_table, pos), valor)
+         else: #No existe y se debe agregar la llave-valor  
+            me.set_key(lt.get_element(new_table, pos), llave)
+            me.set_value(lt.get_element(new_table, pos), valor)
+            
+   my_map["current_factor"] = my_map["size"]/my_map["capacity"]
+   return my_map
 
 def new_map(num_elements, load_factor, prime=109345121):
     y=mf.next_prime(num_elements//load_factor)

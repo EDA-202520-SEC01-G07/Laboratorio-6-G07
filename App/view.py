@@ -28,7 +28,7 @@ import sys
 import App.logic as logic
 import time
 import tracemalloc
-from DataStructures.Map import map as mp
+from DataStructures.Map import map_linear_probing as mp
 from DataStructures.List import array_list as al
 
 

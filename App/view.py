@@ -173,24 +173,32 @@ def main():
             print('Géneros cargados: ' + str(tg))
             print('Asociación de Géneros a Libros cargados: ' +
                   str(bktg))
-            elapsed_time_ms, current, peak = tiempo_end(t0)
+            elapsed_ms, current_kb, peak_kb = tiempo_end(t0)  
+            print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")  
+
 
         elif int(inputs[0]) == 2:
             number = input("Ingrese el id del libro (good_read_book_id) que desea buscar: ")
             t0= tiempo_start()
             book = logic.get_book_info_by_book_id(control, number)
             print_book_info(book)
-
+            elapsed_ms, current_kb, peak_kb = tiempo_end(t0)
+            print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")
+            
         elif int(inputs[0]) == 3:
             authorname = input("Nombre del autor a buscar: ")
             author, author_book_list = logic.get_books_by_author(control, authorname)
             print_books_by_author(author,author_book_list)
+            elapsed_ms, current_kb, peak_kb = tiempo_end(t0)
+            print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")
 
         elif int(inputs[0]) == 4:
             label = input("Etiqueta a buscar: ")
             book_list_by_tag = logic.get_books_by_tag(control, label)
             print_books_by_tag(label, book_list_by_tag)
-                 
+            elapsed_ms, current_kb, peak_kb = tiempo_end(t0)
+            print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")
+                
         elif int(inputs[0]) == 5:
             author_name = input("Ingrese el nombre del autor que desea buscar:\n")
             pub_year = input("Ingrese la fecha de publicación que desea buscar:\n") 

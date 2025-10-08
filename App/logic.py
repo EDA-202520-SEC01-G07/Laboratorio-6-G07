@@ -83,10 +83,21 @@ def load_data(catalog):
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
+    start_time = getTime()
+    tracemalloc.start()
+    start_memory = getMemory()
+
     books, authors = load_books(catalog)
     tag_size = load_tags(catalog)
     book_tag_size = load_books_tags(catalog)
-    return books, authors,tag_size,book_tag_size
+
+    stop_memory = getMemory()
+    tracemalloc.stop()
+    end_time = getTime()
+
+    delta_t = deltaTime(end_time, start_time)
+    delta_m = deltaMemory(start_memory, stop_memory)
+    return books, authors,tag_size,book_tag_size, delta_t, delta_m
 
 
 def load_books(catalog):
@@ -95,33 +106,57 @@ def load_books(catalog):
     cada uno de ellos, se crea en la lista de autores, a dicho autor y una
     referencia al libro que se esta procesando.
     """
+    start_time = getTime()
+    tracemalloc.start()
+    start_memory = getMemory()
     booksfile = data_dir + "books.csv"
     input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
     for book in input_file:
         add_book(catalog, book)
-    return book_size(catalog), author_size(catalog)
+    stop_memory = getMemory()
+    tracemalloc.stop()
+    end_time = getTime()
+    delta_t = deltaTime(end_time, start_time)
+    delta_m = deltaMemory(start_memory, stop_memory)
+    return book_size(catalog), author_size(catalog), delta_t, delta_m
 
 
 def load_tags(catalog):
     """
     Carga todos los tags del archivo y los agrega a la lista de tags
     """
+    start_time = getTime()
+    tracemalloc.start()
+    start_memory = getMemory()
     tagsfile = data_dir + 'tags.csv'
     input_file = csv.DictReader(open(tagsfile, encoding='utf-8'))
     for tag in input_file:
         add_tag(catalog, tag)
-    return tag_size(catalog)
+    stop_memory = getMemory()
+    tracemalloc.stop()
+    end_time = getTime()
+    delta_t = deltaTime(end_time, start_time)
+    delta_m = deltaMemory(start_memory, stop_memory)
+    return tag_size(catalog), delta_t, delta_m
 
 
 def load_books_tags(catalog):
     """
     Carga la información que asocia tags con libros.
     """
+    start_time = getTime()
+    tracemalloc.start()
+    start_memory = getMemory()
     bookstagsfile = data_dir +"book_tags.csv"
     input_file = csv.DictReader(open(bookstagsfile, encoding='utf-8'))
     for booktag in input_file:
         add_book_tag(catalog, booktag)
-    return book_tag_size(catalog)
+    stop_memory = getMemory()
+    tracemalloc.stop()
+    end_time = getTime()
+    delta_t = deltaTime(end_time, start_time)
+    delta_m = deltaMemory(start_memory, stop_memory)
+    return book_tag_size(catalog), delta_t, delta_m
 
 
 def new_tag(name, id):

@@ -167,13 +167,11 @@ def main():
         # TODO agregar tiempo de ejecución y consumo de memoria
         if int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
-            bk, at, tg, bktg = load_data(control)
+            bk, at, tg, bktg,elapsed_ms,current_kb,peak_kb = load_data(control)
             print('Libros cargados: ' + str(bk))
             print('Autores cargados: ' + str(at))
             print('Géneros cargados: ' + str(tg))
-            print('Asociación de Géneros a Libros cargados: ' +
-                  str(bktg))
-            elapsed_ms, current_kb, peak_kb = tiempo_end(t0)  
+            print('Asociación de Géneros a Libros cargados: ' + str(bktg))
             print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")  
 
 
@@ -187,6 +185,7 @@ def main():
             
         elif int(inputs[0]) == 3:
             authorname = input("Nombre del autor a buscar: ")
+            t0= tiempo_start()
             author, author_book_list = logic.get_books_by_author(control, authorname)
             print_books_by_author(author,author_book_list)
             elapsed_ms, current_kb, peak_kb = tiempo_end(t0)
@@ -194,6 +193,7 @@ def main():
 
         elif int(inputs[0]) == 4:
             label = input("Etiqueta a buscar: ")
+            t0= tiempo_start()
             book_list_by_tag = logic.get_books_by_tag(control, label)
             print_books_by_tag(label, book_list_by_tag)
             elapsed_ms, current_kb, peak_kb = tiempo_end(t0)

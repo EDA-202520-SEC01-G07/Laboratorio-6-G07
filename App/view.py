@@ -69,7 +69,7 @@ def load_data(control):
     t0=tiempo_start()
     books, authors, tags, book_tags= logic.load_data(control)
     elapsed_time_ms, current, peak = tiempo_end(t0)
-    return books, authors, tags, book_tags, elapsed_time_ms, current, peak
+    return books, authors, tags, book_tags, elapsed_time_ms, current
 
 #  -------------------------------------------------------------
 # Funciones para la correcta impresión de los datos
@@ -167,12 +167,12 @@ def main():
         # TODO agregar tiempo de ejecución y consumo de memoria
         if int(inputs[0]) == 1:
             print("Cargando información de los archivos ....")
-            bk, at, tg, bktg,elapsed_ms,current_kb,peak_kb = load_data(control)
+            bk, at, tg, bktg,dt,mt = load_data(control)
             print('Libros cargados: ' + str(bk))
             print('Autores cargados: ' + str(at))
             print('Géneros cargados: ' + str(tg))
             print('Asociación de Géneros a Libros cargados: ' + str(bktg))
-            print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")  
+            print(f'Tiempo [ms]: {dt:.2f}  |  Memoria [kB]: {mt:.2f}')
 
 
         elif int(inputs[0]) == 2:
@@ -181,7 +181,7 @@ def main():
             book = logic.get_book_info_by_book_id(control, number)
             print_book_info(book)
             elapsed_ms, current_kb, peak_kb = tiempo_end(t0)
-            print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")
+            [print(f"\nTiempo: {elapsed_ms:.2f} ms | Mem actual: {current_kb:.2f} kB | Pico: {peak_kb:.2f} kB\n")]
             
         elif int(inputs[0]) == 3:
             authorname = input("Nombre del autor a buscar: ")

@@ -106,20 +106,15 @@ def default_sort_criteria(element_1, element_2):
 sort_crit = default_sort_criteria
 
 def insertion_sort(my_list, sort_crit):
-    sort_list = new_list()
-    if my_list["size"]>1:
-        sort_crit(my_list["elements"][0], my_list["elements"][1])
-        for i in range(0,my_list["size"]):
-            if sort_list["size"]==0:
-                add_last(sort_list, my_list["elements"][i])
-            else:
-                position = 0
-                while position < sort_list["size"] and sort_crit(sort_list["elements"][position], my_list["elements"][i]):
-                    position +=1
-                insert_element(sort_list, position, my_list["elements"][i])
-    else:
-        sort_list = my_list
-    return sort_list
+    n=my_list["size"]
+    for i in range(1,n):
+        key=my_list["elements"][i]
+        j=i-1
+        while j>=0 and sort_crit(key,my_list["elements"][j]):
+            my_list["elements"][j+1]=my_list["elements"][j]
+            j-=1
+        my_list["elements"][j+1]=key
+    return my_list
 
 def selection_sort(array_list, sort_criteria):
     n = size(array_list)

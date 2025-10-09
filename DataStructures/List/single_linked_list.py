@@ -223,23 +223,17 @@ sort_criteria = default_sort_criteria
 
 
 def insertion_sort(my_list, default_sort_criteria):
-    sort_list = new_list()
     nodo = my_list["first"]
-    tam = sort_list["size"]
-    while nodo != None:
-        if tam==0:
-            sort_list = add_last(sort_list, nodo["info"])
+    while nodo != None and nodo["next"] != None:
+        if not default_sort_criteria(nodo["info"], nodo["next"]["info"]):
+            temp = nodo["info"]
+            nodo["info"] = nodo["next"]["info"]
+            nodo["next"]["info"] = temp
+            nodo = my_list["first"]
         else:
-            actual = sort_list["first"]
-            pos = 0
-            t = sort_list["size"]
-            while actual != None and pos < t and default_sort_criteria(actual["info"], nodo["info"]):
-                actual = actual["next"]
-                pos +=1
-            sort_list = insert_element(sort_list, nodo["info"], pos)
-        nodo=nodo["next"]
-    return sort_list
-
+            nodo = nodo["next"]
+    return my_list
+        
 def selection_sort(list, sort_criteria):
     n = size(list)
     for i in range(n):

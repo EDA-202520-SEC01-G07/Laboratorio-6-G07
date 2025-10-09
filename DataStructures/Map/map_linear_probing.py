@@ -51,9 +51,11 @@ def rehash(my_map):
    new_table = lt.new_list()
    for i in range(cap_nueva):
         lt.add_last(new_table, me.new_map_entry(None,None))
+   tabla_ant = my_map["table"]
+   my_map["table"] = new_table
    
    for i in range(cap_ant):
-      entry = lt.get_element(my_map["table"], i)
+      entry = lt.get_element(tabla_ant, i)
       if me.get_key(entry) is not None:
          llave = me.get_key(entry)
          valor = me.get_value(entry)
@@ -65,7 +67,7 @@ def rehash(my_map):
          else: #No existe y se debe agregar la llave-valor  
             me.set_key(lt.get_element(new_table, pos), llave)
             me.set_value(lt.get_element(new_table, pos), valor)
-            
+
    my_map["current_factor"] = my_map["size"]/my_map["capacity"]
    return my_map
 

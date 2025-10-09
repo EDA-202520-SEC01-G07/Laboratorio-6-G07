@@ -6,7 +6,11 @@ def new_list():
     return newlist
 
 def get_element(my_list, index):
-    return my_list["elements"][index]
+    my_list["size"]=len(my_list["elements"])
+    if index >= my_list["size"]:
+        raise Exception('IndexError: list index out of range')
+    else:
+        return my_list["elements"][index]
 
 def is_present(my_list, element, cmp_function):
     size = my_list["size"]
@@ -106,6 +110,7 @@ def default_sort_criteria(element_1, element_2):
 sort_crit = default_sort_criteria
 
 def insertion_sort(my_list, sort_crit):
+    my_list["size"]=len(my_list["elements"])
     n=my_list["size"]
     for i in range(1,n):
         key=my_list["elements"][i]
@@ -149,6 +154,7 @@ def shell_sort(my_list, sort_criteria):
     return my_list
 
 def merge_sort(my_list, sort_crit):
+    my_list["size"]=len(my_list["elements"])
     if my_list["size"] > 1:
         mitad = my_list["size"] // 2
         izq= sub_list(my_list, 0, mitad)

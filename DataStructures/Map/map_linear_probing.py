@@ -57,7 +57,7 @@ def rehash(my_map):
       if me.get_key(entry) is not None:
          llave = me.get_key(entry)
          valor = me.get_value(entry)
-         h = mf.hash_value(my_map, llave) #Encuentra el nuevo valor hash
+         h = mf.hash_value(my_map, llave) % my_map["capacity"] #Encuentra el nuevo valor hash
          
          ocupied, pos = find_slot(my_map, llave, h)
          if ocupied: #Si existe la llave, se cambia el valor

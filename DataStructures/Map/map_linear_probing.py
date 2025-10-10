@@ -4,12 +4,9 @@ from DataStructures.Map import map_functions as mf
 import random 
 
 def is_available(table, pos):
-   if pos >= lt.size(table) or pos < 0:
-      return False
-   else:
-      entry = lt.get_element(table, pos)
-      if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
-         return True
+   entry = lt.get_element(table, pos)
+   if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
+      return True
    return False
 
 def default_compare(key, entry):
@@ -24,9 +21,6 @@ def find_slot(my_map, key, hash_value):
    first_avail = None
    found = False
    ocupied = False
-   capacity= my_map["capacity"]
-   hash_value = hash_value % capacity
-   
    while not found:
       if is_available(my_map["table"], hash_value):
             if first_avail is None:
@@ -38,7 +32,7 @@ def find_slot(my_map, key, hash_value):
             first_avail = hash_value
             found = True
             ocupied = True
-      hash_value = (hash_value + 1) % capacity
+      hash_value = (hash_value + 1) % my_map["capacity"]
    return ocupied, first_avail   
 
 def rehash(my_map):
@@ -57,11 +51,9 @@ def rehash(my_map):
    new_table = lt.new_list()
    for i in range(cap_nueva):
         lt.add_last(new_table, me.new_map_entry(None,None))
-   tabla_ant = my_map["table"]
-   my_map["table"] = new_table
    
    for i in range(cap_ant):
-      entry = lt.get_element(tabla_ant, i)
+      entry = lt.get_element(my_map["table"], i)
       if me.get_key(entry) is not None:
          llave = me.get_key(entry)
          valor = me.get_value(entry)
@@ -73,7 +65,7 @@ def rehash(my_map):
          else: #No existe y se debe agregar la llave-valor  
             me.set_key(lt.get_element(new_table, pos), llave)
             me.set_value(lt.get_element(new_table, pos), valor)
-
+            
    my_map["current_factor"] = my_map["size"]/my_map["capacity"]
    return my_map
 

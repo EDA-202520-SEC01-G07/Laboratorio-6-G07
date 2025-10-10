@@ -39,7 +39,6 @@ def rehash(my_map):
             entry_nuevo = alt.get_element(new_table, h)
             slt.add_last(entry_nuevo,me.new_map_entry(elem["key"], elem["value"]))
             contador += 1
-    my_map["table"] = new_table
     my_map["size"] = contador 
     my_map["current_factor"] = my_map["size"]/my_map["capacity"]
     my_map["table"] = new_table
@@ -71,7 +70,7 @@ def put(mapa, key, value):
         if elem["key"]==key:
             appears = True
             if appears == True:
-                me.set_value(elem, value)
+                me.set_value(entry, value)
     if appears == False:
         slt.add_last(entry, me.new_map_entry(key, value))
         mapa["size"] += 1

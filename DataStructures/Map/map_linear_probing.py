@@ -4,6 +4,8 @@ from DataStructures.Map import map_functions as mf
 import random 
 
 def is_available(table, pos):
+   if pos < 0 or pos >= lt.size(table):
+      return False
    entry = lt.get_element(table, pos)
    if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
       return True

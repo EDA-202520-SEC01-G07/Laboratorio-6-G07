@@ -4,9 +4,12 @@ from DataStructures.Map import map_functions as mf
 import random 
 
 def is_available(table, pos):
-   entry = lt.get_element(table, pos)
-   if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
-      return True
+   if pos >= lt.size(table) or pos < 0:
+      return False
+   else:
+      entry = lt.get_element(table, pos)
+      if me.get_key(entry) is None or me.get_key(entry) == "__EMPTY__":
+         return True
    return False
 
 def default_compare(key, entry):
@@ -21,6 +24,9 @@ def find_slot(my_map, key, hash_value):
    first_avail = None
    found = False
    ocupied = False
+   capacity= my_map["capacity"]
+   hash_value = hash_value % capacity
+   
    while not found:
       if is_available(my_map["table"], hash_value):
             if first_avail is None:
@@ -32,7 +38,7 @@ def find_slot(my_map, key, hash_value):
             first_avail = hash_value
             found = True
             ocupied = True
-      hash_value = (hash_value + 1) % my_map["capacity"]
+      hash_value = (hash_value + 1) % capacity
    return ocupied, first_avail   
 
 def rehash(my_map):

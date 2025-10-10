@@ -21,6 +21,7 @@ def rehash(my_map):
     Asignar la nueva tabla como la tabla actual.
     Retornar la tabla nueva.
     """
+    
     cap_nueva = mf.next_prime(2*my_map["capacity"])
     new_table = alt.new_list()
     for i in range(0, cap_nueva):
@@ -29,12 +30,14 @@ def rehash(my_map):
         
     contador = 0
     cap_ant = my_map["capacity"]
+    old_table = my_map["table"]
     my_map["capacity"] = cap_nueva
+    
     for i in range(cap_ant):
-        entry = alt.get_element(my_map["table"], i)
+        entry = alt.get_element(old_table, i)
         for j in range(slt.size(entry)):
             elem = slt.get_element(entry, j)
-            h = mf.hash_value(my_map, elem["key"])
+            h = mf.hash_value(my_map, elem["key"]) % my_map["capacity"]
             
             entry_nuevo = alt.get_element(new_table, h)
             slt.add_last(entry_nuevo,me.new_map_entry(elem["key"], elem["value"]))
@@ -62,15 +65,15 @@ def new_map(num_elements, load_factor, prime=109345121):
     return map
 
 def put(mapa, key, value):
-    llave = mf.hash_value(mapa, key) #Hash de la llave
+    llave = mf.hash_value(mapa, key) % mapa["capacity"] #Hash de la llave
     entry = alt.get_element(mapa["table"], llave)
     appears = False
     for i in range(slt.size(entry)):
         elem = slt.get_element(entry, i)
         if elem["key"]==key:
             appears = True
-            if appears == True:
-                me.set_value(entry, value)
+            me.set_value(elem, value)
+            break
     if appears == False:
         slt.add_last(entry, me.new_map_entry(key, value))
         mapa["size"] += 1

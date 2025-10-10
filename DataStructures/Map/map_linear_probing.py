@@ -23,6 +23,8 @@ def find_slot(my_map, key, hash_value):
    first_avail = None
    found = False
    ocupied = False
+   capacity = my_map["capacity"]
+   hash_value = hash_value % capacity
    while not found:
       if is_available(my_map["table"], hash_value):
             if first_avail is None:
